@@ -1,12 +1,12 @@
 
-# 尚虎雲平台-生產端文件
+# 尚虎雲平台-銷售端文件
 
 ## 簡介
 這是一個用於銷售商品的平台。
 
 ## 下載檔案
 
-1. 請先將檔案下載下來 [載點](https://github.com/shanghuyun/Shanghuyun-Production-side/releases/tag/%E6%AA%94%E6%A1%88)
+1. 請先將檔案下載下來 [載點](https://github.com/shanghuyun/Shanghuyun-Sales-side/releases/tag/%E6%AA%94%E6%A1%88)
 
 ## 部署到 PythonAnywhere
 
