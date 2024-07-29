@@ -108,3 +108,61 @@ myvirtualenv
 大功告成了!
 
 ![大功告成](docs/images/大功告成.png)
+
+## 網站配置
+
+接下來會介紹如何更新網站內容
+
+### 1. 進入管理員後台
+
+在網址後輸入`/admin`進入後台管理介面
+
+![進入後台](docs/images/進入後台.png)
+
+### 2. **(重要)**輸入預設帳號密碼，並變更密碼
+
+帳號:admin
+密碼:csie2024
+
+![變更密碼](docs/images/變更密碼.png)
+
+### 3. 變更個人資料
+
+有紅色星號的為必填其餘為選填，**用戶選擇admin**
+
+![個人資料修改畫面](docs/images/個人資料.png)
+
+![個人資料影響畫面](docs/images/變更密碼.png)
+*此為個人資料所影響畫面*
+
+### 4. 變更網頁標題 & logo
+
+![網頁標題&logo修改畫面](docs/images/網頁標題&logo.png)
+
+![網頁標題影響畫面](docs/images/網頁標題.png)
+*此為網頁標題所影響畫面*
+
+![網頁logo影響畫面](docs/images/網頁logo.png)
+*此為網頁logo所影響畫面*
+
+### 5. 變更輪播圖
+
+![輪播圖新增畫面](docs/images/輪播圖.png)
+
+![輪播圖影響畫面](docs/images/輪播圖影響.png)
+*此為輪播圖所影響畫面*
+
+### 6. 變更關於我們
+![關於我們變更畫面](docs/images/關於我們.png)
+
+![關於我們影響畫面](docs/images/關於我們影響.png)
+*此為關於我們所影響畫面*
+
+### 7. 新增賣家
+- 目標網址請填生產端網址，當前版本商品內容都是由生產端提供，若需架設生產端請參考[這裡](https://github.com/shanghuyun/Shanghuyun-Production-side)
+
+### 8. 變更嵌入地圖
+
+- 嵌入式地圖程式碼由google map獲取，詳細步驟可參考[這裡](https://www.design-hu.com.tw/wordpress/wordpress-tools/google-maps-embed-to-website.html)
+![嵌入地圖影響畫面](docs/images/地圖.png)
+*此為關於我們所影響畫面*
