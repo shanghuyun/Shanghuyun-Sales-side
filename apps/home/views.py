@@ -107,5 +107,4 @@ def product_list(request, seller_id):
 
 def product_photos(request, product_id):
     images = ProductImage.objects.filter(product_id=product_id).values()
-    print(images)
     return JsonResponse(list(images), safe=False)

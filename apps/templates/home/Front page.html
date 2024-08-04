@@ -60,7 +60,7 @@
           <div class="item">
         {% endif %}
         <img src="{{ carousel.image.url }}">
-            <div class="content">
+            <div class="content" style="color: {{ carousel.color }}">
               {% if carousel.header %}
                 <p>
                   {{ carousel.header }}
@@ -98,7 +98,7 @@
         {% endif %}
         <img src="{{ carousel.image.url }}">
           {% if carousel.title %}
-          <div class="title">
+          <div class="title" style="color: {{ carousel.color }}">
               {{ carousel.title }}
           </div>
           {% endif %}

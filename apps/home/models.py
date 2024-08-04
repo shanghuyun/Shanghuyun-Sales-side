@@ -5,8 +5,8 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save, pre_save, post_delete
 from django.conf import settings
 from django.dispatch import receiver
-from django.core.files import File
-from urllib.parse import urlparse, urljoin
+from colorfield.fields import ColorField
+from urllib.parse import  urljoin
 
 #############################################################
 # 個人資料Model
@@ -80,6 +80,8 @@ class CarouselImage(models.Model):
     title = models.CharField(max_length=10, blank=True, null=True, verbose_name='標題')
 
     content = models.TextField(blank=True, null=True, verbose_name='內容描述')
+
+    color = ColorField(default='#FF0000', verbose_name='文字顏色選擇')
 
     def __str__(self):
         return f"Carousel Image {self.id}"

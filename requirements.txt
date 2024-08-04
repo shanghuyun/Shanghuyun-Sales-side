@@ -12,3 +12,4 @@ django-environ==0.8.1
 django-jazzmin
 requests
 pillow
+django-colorfield
