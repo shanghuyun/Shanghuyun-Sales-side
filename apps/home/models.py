@@ -223,19 +223,26 @@ def fetch_product_data(sender, instance, created, **kwargs):
     if created:
         try:
             with transaction.atomic():
-                response = requests.get(f"{instance.target_url}/api/get_product_names/")
+                response = requests.get(f"{instance.target_url}/api/get_product_ids/")
                 response.raise_for_status()
-                product_names = response.json()
+                product_ids = response.json()
 
-                for product_name in product_names:
-                    product_response = requests.get(f"{instance.target_url}/api/get_product_details/{product_name}/")
+                for product_id in product_ids:
+                    product_response = requests.get(f"{instance.target_url}/api/get_product_details/{product_id}/")
                     product_response.raise_for_status()
                     product_data = product_response.json()
 
-                    if ProductInfo.objects.filter(product_name=product_data['product_name']).exists():
-                        product_data['product_name'] += "_duplicate"
+                    original_name = product_data['product_name']
+                    unique_name = original_name
+                    counter = 1
 
-                    cover_image_dir = os.path.join(settings.MEDIA_ROOT, 'products', product_data['product_name'])
+                    while ProductInfo.objects.filter(product_name=unique_name).exists():
+                        unique_name = f"{original_name}_duplicate_{counter}"
+                        counter += 1
+                    
+                    product_data['product_name'] = unique_name
+
+                    cover_image_dir = os.path.join(settings.MEDIA_ROOT, 'products', unique_name)
                     if not os.path.exists(cover_image_dir):
                         os.makedirs(cover_image_dir)
 
@@ -253,14 +260,14 @@ def fetch_product_data(sender, instance, created, **kwargs):
                         email=product_data['email'],
                         phone_number=product_data['phone_number'],
                         address=product_data['address'],
-                        product_name=product_data['product_name'],
+                        product_name=unique_name,
                         price=product_data['price'],
                         description=product_data['description'],
-                        cover_image=os.path.join('products', product_data['product_name'], cover_image_name)
+                        cover_image=os.path.join('products', unique_name, cover_image_name)
                     )
 
                     for i, image_url in enumerate(product_data['images'][1:]):
-                        image_dir = os.path.join(settings.MEDIA_ROOT, 'products', product_data['product_name'])
+                        image_dir = os.path.join(settings.MEDIA_ROOT, 'products', unique_name)
                         if not os.path.exists(image_dir):
                             os.makedirs(image_dir)
                         full_image_url = urljoin(instance.target_url, image_url)
@@ -270,9 +277,8 @@ def fetch_product_data(sender, instance, created, **kwargs):
                         image_path = os.path.join(image_dir, image_name)
                         with open(image_path, 'wb') as f:
                             f.write(image_response.content)
-                        ProductImage.objects.create(product=product, image=os.path.join('products', product_data['product_name'], image_name))
+                        ProductImage.objects.create(product=product, image=os.path.join('products', unique_name, image_name))
         except requests.exceptions.RequestException as e:
-            # 使用日誌記錄錯誤
             import logging
             logger = logging.getLogger(__name__)
             logger.error(f"Error fetching product data: {e}")
@@ -280,7 +286,6 @@ def fetch_product_data(sender, instance, created, **kwargs):
                 instance.delete()
             raise
         except Exception as e:
-            # 使用日誌記錄錯誤
             import logging
             logger = logging.getLogger(__name__)
             logger.error(f"An unexpected error occurred: {e}")
