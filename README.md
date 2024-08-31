@@ -95,11 +95,7 @@ myvirtualenv
 
 ### 9. 開啟強制HTTPS
 
-<<<<<<< HEAD
-![重載 Web](docs/images/開啟https.png)
-=======
-![重載 Web](docs/images/強制https.png)
->>>>>>> e35aa468f359c9c355834d093d0787d5eb815886
+![開啟強制HTTPS](docs/images/開啟https.png)
 
 ### 8. 重新加載 Web 應用程序
 
