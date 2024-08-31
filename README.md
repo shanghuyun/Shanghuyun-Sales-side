@@ -93,6 +93,10 @@ myvirtualenv
 
 ![輸入 Virtualenv](docs/images/輸入Virtualenv.png)
 
+### 9. 開啟強制HTTPS
+
+![重載 Web](docs/images/開啟https.png)
+
 ### 8. 重新加載 Web 應用程序
 
 重新加載 Web 應用程序以使變更生效。
