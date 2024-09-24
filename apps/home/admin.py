@@ -99,7 +99,16 @@ admin.site.register(AboutUs, AboutUsAdmin)
 
 
 class SellerInfoAdmin(admin.ModelAdmin):
-    list_display = ('seller_name', 'seller_image', 'target_url')
+    def get_readonly_fields(self, request, obj=None):
+        if obj:  # 當 obj 存在時，表示這是對已存在記錄的編輯
+            return [field.name for field in self.model._meta.fields]  # 設置所有字段為只讀
+        else:
+            return []  # 新增時不設置只讀字段
+
+    def has_change_permission(self, request, obj=None):
+        if obj:  # 當記錄已經存在
+            return False  # 禁止修改
+        return True  # 允許新增
 
 admin.site.register(SellerInfo, SellerInfoAdmin)
 

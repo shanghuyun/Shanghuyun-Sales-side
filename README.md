@@ -162,7 +162,7 @@ myvirtualenv
 ![關於我們影響畫面](docs/images/關於我們影響.png)
 *此為關於我們所影響畫面*
 
-### 7. 新增賣家
+### 7. 新增賣家(請利用新增功能)
 - 目標網址請填生產端網址，當前版本商品內容都是由生產端提供，若需架設生產端請參考[這裡](https://github.com/shanghuyun/Shanghuyun-Production-side)
 
 ### 8. 變更嵌入地圖
