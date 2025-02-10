@@ -4,4 +4,4 @@
 
 {% endautoescape %}
 
-git checkout -b feature/v2.0.0
+git push origin feature/v2.0.0
