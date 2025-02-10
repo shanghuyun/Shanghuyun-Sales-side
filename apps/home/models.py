@@ -7,6 +7,7 @@ from django.conf import settings
 from django.dispatch import receiver
 from colorfield.fields import ColorField
 from urllib.parse import  urljoin
+import uuid
 
 #############################################################
 # 個人資料Model
@@ -313,3 +314,67 @@ class MapIframe(models.Model):
     class Meta:
         verbose_name = "6.嵌入地圖"
         verbose_name_plural = "6.嵌入地圖"
+
+
+
+#############################################################
+
+
+class ECPayInfo(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='ecpay_info', limit_choices_to={'is_staff': True})
+    merchant_id = models.CharField(max_length=20, verbose_name='商家編號')
+    hash_key = models.CharField(max_length=50, verbose_name='Hash Key')
+    hash_iv = models.CharField(max_length=50, verbose_name='Hash IV')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.user.username} - ECPay Info'
+    
+    class Meta:
+        verbose_name = "7.商家綠界金流資訊"
+        verbose_name_plural = "7.商家綠界金流資訊"
+# 綠界金流
+class Order(models.Model):
+    merchant_trade_no = models.CharField(max_length=50, unique=True, verbose_name='訂單編號')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='總金額')
+    status = models.CharField(max_length=20, default='尚未付款', verbose_name='狀態')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='建立時間')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='更新時間')
+
+    def __str__(self):
+        return self.merchant_trade_no
+
+    class Meta:
+        verbose_name = "8.訂單"
+        verbose_name_plural = "8.訂單"
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
+    product = models.ForeignKey(ProductInfo, on_delete=models.CASCADE, verbose_name='商品')
+    quantity = models.PositiveIntegerField(verbose_name='數量')
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='價格')
+
+    def __str__(self):
+        return f"{self.product.name} x {self.quantity}"
+    
+    class Meta:
+        verbose_name = "訂單商品"
+        verbose_name_plural = "訂單商品"
+
+class ShippingInfo(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    order = models.OneToOneField(Order, related_name='shipping_info', on_delete=models.CASCADE, verbose_name='訂單')
+    recipient_name = models.CharField(max_length=100, verbose_name='收件人姓名')
+    address = models.CharField(max_length=255, verbose_name='地址')
+    phone_number = models.CharField(max_length=20, verbose_name='電話號碼')
+    email = models.EmailField(verbose_name='電子郵件')
+
+    def __str__(self):
+        return f"{self.recipient_name} - {self.address}"
+
+    class Meta:
+        verbose_name = "送貨資訊"
+        verbose_name_plural = "送貨資訊"
+

@@ -9,7 +9,11 @@ from .models import (
     SellerInfo,
     ProductInfo,
     ProductImage,
-    MapIframe
+    MapIframe,
+    Order,
+    OrderItem,
+    ShippingInfo,
+    ECPayInfo,
 )
 
 #############################################################
@@ -116,6 +120,46 @@ class MapIframeAdmin(admin.ModelAdmin):
         return super().has_add_permission(request)
 
 admin.site.register(MapIframe, MapIframeAdmin)
+
+#############################################################
+# 商家綠界金流資訊
+class ECPayInfoAdmin(admin.ModelAdmin):
+    list_display = ('merchant_id', 'hash_key', 'hash_iv')
+
+    def has_add_permission(self, request):
+        # 禁止在後台管理中添加新 ECPayInfo 實例
+        if ECPayInfo.objects.exists():
+            return False
+        return super().has_add_permission(request)
+
+admin.site.register(ECPayInfo, ECPayInfoAdmin)
+
+#############################################################
+# 商品資訊
+class OrderItemInline(admin.TabularInline):
+    model = OrderItem
+    extra = 0
+    readonly_fields = ('product', 'quantity', 'price')
+
+class ShippingInfoInline(admin.TabularInline):
+    model = ShippingInfo
+    extra = 0
+    readonly_fields = ('recipient_name', 'address', 'phone_number', 'email')
+
+class OrderInformation(admin.ModelAdmin):
+    list_display = ('merchant_trade_no', 'total_amount', 'status', 'created_at')
+    inlines = [OrderItemInline, ShippingInfoInline]
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+admin.site.register(Order, OrderInformation)
 
 #############################################################
 # 自定義管理站點的標題和標頭

@@ -111,17 +111,18 @@
     </div>
 
     <div class="cartTab">
+        <form method="post" id="checkoutForm">
+            {% csrf_token %}
+            <h1>購 物 車</h1>
 
-        <h1>購 物 車</h1>
+            <div class="listCart">
+            </div>
 
-        <div class="listCart">
-        </div>
-
-        <div class="btn">
-            <button class="close">關閉</button>
-            <button class="checkOut">結帳</button>
-        </div>
-
+            <div class="btn">
+                <button type="button" class="close">關閉</button>
+                <button type="button" class="checkOut">結帳</button>
+            </div>
+        </form>
     </div>
 
 {% endblock container %}
@@ -129,4 +130,24 @@
 {% comment %} 在這裡加入javascript {% endcomment %}
 {% block javascripts %}
     <script src="{{ ASSETS_ROOT }}/shop.js"></script>
+    <script>
+        document.querySelector('.checkOut').addEventListener('click', function() {
+            const cart = JSON.parse(localStorage.getItem('cart'));
+            fetch('/checkout/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify(cart)
+            })
+            .then(response => response.text())
+            .then(html => {
+                const newWindow = window.open();
+                newWindow.document.write(html);
+                newWindow.document.forms[0].submit();
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
 {% endblock javascripts %}

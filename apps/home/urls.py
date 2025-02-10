@@ -13,6 +13,10 @@ urlpatterns = [
     path('seller/<int:id>/', views.seller_detail_view, name='seller_detail'),
     path('api/products/<int:seller_id>/', views.product_list, name='product_list'),
     path('api/productsImages/<int:product_id>/', views.product_photos, name='product_photos'),
+    path('checkout/', views.checkout, name='checkout'),
+    path('payment_callback/', views.payment_callback, name='payment_callback'),
+    path('shipping_info/<int:order_id>/', views.shipping_info, name='shipping_info'),
+    path('order_history/', views.order_history, name='order_history'),
     # Matches any html file
     re_path(r'^.*\.html$', views.pages, name='pages'),
 ]

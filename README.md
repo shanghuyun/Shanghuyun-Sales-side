@@ -169,4 +169,11 @@ myvirtualenv
 
 - 嵌入式地圖程式碼由google map獲取，詳細步驟可參考[這裡](https://www.design-hu.com.tw/wordpress/wordpress-tools/google-maps-embed-to-website.html)
 ![嵌入地圖影響畫面](docs/images/地圖.png)
-*此為關於我們所影響畫面*
+*此為嵌入地圖所影響畫面*
+
+---
+## V2.0更新內容
+### 綠界金流新增
+
+- 若賣家有綠界金流可在後台填入對應資訊，即可開啟交易功能
+![綠界金流](docs/images/綠界金流.png)
